@@ -1,0 +1,45 @@
+﻿@model IEnumerable<MYProj.Models.Departs_Tasks>
+@{
+    ViewBag.Title = "Real";
+}
+
+<h2>Установите реальный срок выполнения задач:</h2>
+
+<table class="table">
+    <tr>
+        <th>
+            Проект
+        </th>
+        <th>
+            Задача отделу
+        </th>
+        <th>
+            Срок выполнения
+        </th>
+        <th>
+            Реальный срок выполнения
+        </th>
+        <th></th>
+    </tr>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Project.Название)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Задача_отделу)
+            </td>
+            <td>
+                @item.Срок_выполнения_задачи.ToShortDateString()
+            </td>
+            <td>
+                @item.Реальный_срок.ToString()
+            </td>
+            <td>
+                @Html.ActionLink("Изменить", "Edit", new { pr = item.Проект, dep = item.Отдел}) 
+            </td>
+        </tr>
+    }
+
+</table>

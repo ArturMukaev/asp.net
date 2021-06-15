@@ -1,0 +1,62 @@
+﻿@model MYProj.Models.Otchet
+@{
+    ViewBag.Title = "Otchet";
+}
+<h2>Отчет о проектах на @DateTime.Now</h2>
+<table class="table">
+    <tr>
+        <th>
+            Проект
+        </th>
+        <th>
+            Срок выполнения
+        </th>
+        <th>
+            Реальный срок выполнения
+        </th>
+    </tr>
+    @foreach (var item in Model.Projects)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Название)
+            </td>
+            <td>
+                @item.Срок_выполнения.ToShortDateString()
+            </td>
+            <td>
+                @{
+                    List<DateTime> dates = new List<DateTime>();
+                    foreach (var thing in Model.Tasks)
+                    {
+
+                        if (thing.Проект == item.Код_проекта)
+                        {
+                            if (thing.Реальный_срок != null)
+                            {
+                                dates.Add(Convert.ToDateTime(thing.Реальный_срок));
+                            }
+                        }
+                    }
+                    DateTime date = new DateTime();
+                    if (dates.Count != 0)
+                    {
+                        date = dates.Max<DateTime>();
+                    }
+                }
+
+                @{if (dates.Count != 0)
+                    {
+                        <span>@date.ToShortDateString()</span>
+                    }
+                    else
+                    {
+                        <span>Нет данных</span>
+                    }
+                }
+            </td>
+        </tr>
+    }
+
+</table>
+@Html.ActionLink("Выгрузить отчет в Excel", "Export","Projects", routeValues: null, htmlAttributes: new { @class="artur-link btn btn-success", @style="color: black;"})

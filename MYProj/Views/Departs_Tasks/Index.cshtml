@@ -1,0 +1,53 @@
+﻿@model IEnumerable<MYProj.Models.Departs_Tasks>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Задачи отделам</h2>
+
+    <p>
+        @Html.ActionLink("Добавить задачу", "Create")
+    </p>
+    <table class="table">
+        <tr>
+            <th>
+                Проект
+            </th>
+            <th>
+                Отдел
+            </th>
+            <th>
+                Задача отделу
+            </th>
+            <th>
+                Срок выполнения
+            </th>
+            <th></th>
+        </tr>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Project.Название)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Depart.Название)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Задача_отделу)
+                </td>
+                <td>
+                    @item.Срок_выполнения_задачи.ToShortDateString()
+                </td>
+                <td>
+                    @Html.ActionLink("Изменить", "Edit", new { pr = item.Проект, dep = item.Отдел }) |
+                    @Html.ActionLink("Удалить", "Delete", new { pr = item.Проект, dep = item.Отдел })
+                </td>
+            </tr>
+        }
+
+    </table>
+
+
+   

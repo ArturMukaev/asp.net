@@ -1,0 +1,37 @@
+﻿@model IEnumerable<MYProj.Models.Project>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Управление проектами</h2>
+
+<p>
+    @Html.ActionLink("Создать новый", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Название)
+        </th>
+        <th>
+            Срок выполнения
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Название)
+        </td>
+        <td>
+            @item.Срок_выполнения.ToShortDateString()
+        </td>
+        <td>
+            @Html.ActionLink("Изменить", "Edit", new { id=item.Код_проекта })
+        </td>
+    </tr>
+}
+
+</table>

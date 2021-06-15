@@ -1,0 +1,132 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - Система управления проектами</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+</head>
+
+
+<body>
+    @if (Roles.IsUserInRole(User.Identity.Name, "Director"))
+    {
+        <header>
+            <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+                <div class="container-fluid">
+                    <a class="navbar-brand" href="https://www.instagram.com/arty___07/"><img src="~/images/logo.svg" alt="Logo" width="70px" height="70px" /></a>
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                        <ul class="nav navbar-nav me-auto mb-2 mb-lg-0">
+                            <li >@Html.ActionLink("Главная", "Index", "Home", routeValues: null, htmlAttributes: new { @class = "artur-link" })</li>
+                            <li >@Html.ActionLink("Редактировать отделы", "Index", "Departs", routeValues: null, htmlAttributes: new { @class = "artur-link" })</li>
+                            <li >@Html.ActionLink("Отчет о проектах", "Otchet", "Projects", routeValues: null, htmlAttributes: new { @class = "artur-link" })</li>
+                            <li >@Html.ActionLink("Управление проектами", "Index", "Projects", routeValues: null, htmlAttributes: new { @class = "artur-link" })</li>
+                            <li >@Html.ActionLink("Задачи отделам", "Index", "Departs_Tasks", routeValues: null, htmlAttributes: new { @class = "artur-link" })</li>
+                        </ul>
+                        @Html.Partial("_LoginPartial")
+                    </div>
+                </div>
+            </nav>
+        </header>
+    }
+    @if(Roles.IsUserInRole(User.Identity.Name, "Depart_Director"))
+    {
+        <header>
+            <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+                <div class="container-fluid">
+                    <a class="navbar-brand" href="https://www.instagram.com/arty___07/"><img src="~/images/logo.svg" alt="Logo" width="70px" height="70px" /></a>
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                        <ul class="nav navbar-nav me-auto mb-2 mb-lg-0">
+                            <li >@Html.ActionLink("Главная", "Index", "Home", routeValues: null, htmlAttributes: new { @class = "artur-link" })</li>
+                            <li >@Html.ActionLink("Реальный срок проектов", "Real", "Departs_Tasks", routeValues: null, htmlAttributes:  new { @class = "artur-link" })</li>
+                            <li >@Html.ActionLink("Задачи сотрудникам", "Index", "Workers_Tasks", routeValues: null, htmlAttributes:  new {  @class = "artur-link" })</li>
+                        </ul>
+                        @Html.Partial("_LoginPartial")
+                    </div>
+                </div>
+            </nav>
+        </header>
+    }
+    @if (Roles.IsUserInRole(User.Identity.Name, "Worker"))
+    {
+        <header>
+            <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+                <div class="container-fluid">
+                    <a class="navbar-brand" href="https://www.instagram.com/arty___07/"><img src="~/images/logo.svg" alt="Logo" width="70px" height="70px" /></a>
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                        <ul class="nav navbar-nav me-auto mb-2 mb-lg-0">
+                            <li >@Html.ActionLink("Главная", "Index", "Home", routeValues: null, htmlAttributes: new { @class = "artur-link" })</li>
+                            <li >@Html.ActionLink("Мои задачи", "Otchet", "Workers_Tasks", routeValues: null, htmlAttributes: new { @class = "artur-link" })</li>
+                        </ul>
+                        @Html.Partial("_LoginPartial")
+                    </div>
+                </div>
+            </nav>
+        </header>
+    }
+    @if (Roles.IsUserInRole(User.Identity.Name, "HR"))
+    {
+        <header>
+            <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+                <div class="container-fluid">
+                    <a class="navbar-brand" href="https://www.instagram.com/arty___07/"><img src="~/images/logo.svg" alt="Logo" width="70px" height="70px" /></a>
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                        <ul class="nav navbar-nav me-auto mb-2 mb-lg-0">
+                            <li >@Html.ActionLink("Главная", "Index", "Home", routeValues: null, htmlAttributes: new { @class = "artur-link" })</li>
+                            <li >@Html.ActionLink("Управление сотрудниками", "Index", "Workers", routeValues: null, htmlAttributes: new { @class = "artur-link" })</li>
+                            <li >@Html.ActionLink("Управление данными для входа", "Index", "AspNetUsers", routeValues: null, htmlAttributes: new { @class = "artur-link" })</li>
+                        </ul>
+                        @Html.Partial("_LoginPartial")
+                    </div>
+                </div>
+            </nav>
+        </header>
+    }
+    @if(!Request.IsAuthenticated)
+    {
+        <header>
+            <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+                <div class="container-fluid">
+                    <a class="navbar-brand" href="https://www.instagram.com/arty___07/"><img src="~/images/logo.svg" alt="Logo" width="70px" height="70px" /></a>
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                        @Html.Partial("_LoginPartial")
+                    </div>
+                </div>
+            </nav>
+        </header>
+    }
+
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year - Учебная практика</p>
+        </footer>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    <link href="~/Content/bootstrap.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/Site.css" rel="stylesheet" type="text/css" />
+    <script src="~/Scripts/bootstrap1.js"></script>
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    @RenderSection("scripts", required: false)
+</body>
+</html>

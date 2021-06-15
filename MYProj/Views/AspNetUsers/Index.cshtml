@@ -1,0 +1,57 @@
+﻿@model MYProj.Models.ident
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Управление данными для входа</h2>
+
+<p>
+    @Html.ActionLink("Добавить аккаунт", "Register", "Account", routeValues: null, htmlAttributes: new { @class = "btn btn-primary", @style = "text-decoration: none; color: black;" })
+</p>
+<table class="table">
+    <tr>
+        <th>
+            Почта
+        </th>
+        <th>
+            Пароль
+        </th>
+        <th>
+            Ник
+        </th>
+        <th>
+            Роль
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model.Users)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Email)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Pass)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UserName)
+            </td>
+            <td>
+                @{ 
+                    foreach(var it in item.AspNetRoles)
+                {
+                                <span>@it.Name</span>
+                }
+                }
+            </td>
+            <td>
+                @Html.ActionLink("Изменить", "Edit", new { id = item.Id }) |
+                @Html.ActionLink("Удалить", "Delete", new { id = item.Id })
+            </td>
+        </tr>
+    }
+
+</table>
+

@@ -1,0 +1,265 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="Хранилище Model" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Departs">
+    <Key>
+      <PropertyRef Name="Код_отдела" />
+    </Key>
+    <Property Name="Код_отдела" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Название" Type="nchar" MaxLength="15" Nullable="false" />
+    <Property Name="Краткое_описание" Type="nchar" MaxLength="120" />
+  </EntityType>
+  <!--Ошибки, обнаруженные при создании:
+предупреждение 6002: В таблице или представлении "Artur.dbo.Departs_Tasks" не определен первичный ключ. Ключ был выведен, а определение таблицы или представления было создано в режиме только для чтения.-->
+  <EntityType Name="Departs_Tasks">
+    <Key>
+      <PropertyRef Name="Проект" />
+      <PropertyRef Name="Отдел" />
+      <PropertyRef Name="Задача_отделу" />
+      <PropertyRef Name="Срок_выполнения_задачи" />
+    </Key>
+    <Property Name="Проект" Type="int" Nullable="false" />
+    <Property Name="Отдел" Type="int" Nullable="false" />
+    <Property Name="Задача_отделу" Type="nchar" MaxLength="50" Nullable="false" />
+    <Property Name="Срок_выполнения_задачи" Type="date" Nullable="false" />
+    <Property Name="Реальный_срок" Type="date" />
+  </EntityType>
+  <EntityType Name="Gender">
+    <Key>
+      <PropertyRef Name="Код_пола" />
+    </Key>
+    <Property Name="Код_пола" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Пол" Type="nchar" MaxLength="10" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Projects">
+    <Key>
+      <PropertyRef Name="Код_проекта" />
+    </Key>
+    <Property Name="Код_проекта" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Название" Type="nchar" MaxLength="20" Nullable="false" />
+    <Property Name="Срок_выполнения" Type="date" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Roles">
+    <Key>
+      <PropertyRef Name="Код_роли" />
+    </Key>
+    <Property Name="Код_роли" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Должность" Type="nchar" MaxLength="20" Nullable="false" />
+    <Property Name="Зарплата" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Salary">
+    <Key>
+      <PropertyRef Name="Код_зарплаты" />
+    </Key>
+    <Property Name="Код_зарплаты" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Зарплата" Type="money" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Statuses">
+    <Key>
+      <PropertyRef Name="Код_статуса" />
+    </Key>
+    <Property Name="Код_статуса" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Статус" Type="nchar" MaxLength="20" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Workers">
+    <Key>
+      <PropertyRef Name="Код_сотрудника" />
+    </Key>
+    <Property Name="Код_сотрудника" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Отдел" Type="int" />
+    <Property Name="Фамилия" Type="nchar" MaxLength="15" Nullable="false" />
+    <Property Name="Имя" Type="nchar" MaxLength="15" Nullable="false" />
+    <Property Name="Отчество" Type="nchar" MaxLength="15" Nullable="false" />
+    <Property Name="Дата_рождения" Type="date" Nullable="false" />
+    <Property Name="Телефон" Type="nchar" MaxLength="11" Nullable="false" />
+    <Property Name="Почта" Type="nchar" MaxLength="30" Nullable="false" />
+    <Property Name="Пол" Type="int" Nullable="false" />
+    <Property Name="Роль" Type="int" Nullable="false" />
+  </EntityType>
+  <!--Ошибки, обнаруженные при создании:
+предупреждение 6002: В таблице или представлении "Artur.dbo.Workers_Tasks" не определен первичный ключ. Ключ был выведен, а определение таблицы или представления было создано в режиме только для чтения.-->
+  <EntityType Name="Workers_Tasks">
+    <Key>
+      <PropertyRef Name="Проект" />
+      <PropertyRef Name="Сотрудник" />
+      <PropertyRef Name="Задача" />
+      <PropertyRef Name="Срок_выполнения" />
+      <PropertyRef Name="Статус" />
+    </Key>
+    <Property Name="Проект" Type="int" Nullable="false" />
+    <Property Name="Сотрудник" Type="int" Nullable="false" />
+    <Property Name="Задача" Type="nchar" MaxLength="100" Nullable="false" />
+    <Property Name="Срок_выполнения" Type="date" Nullable="false" />
+    <Property Name="Статус" Type="int" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_Задачи_отделам_Отделы">
+    <End Role="Departs" Type="Self.Departs" Multiplicity="1" />
+    <End Role="Departs_Tasks" Type="Self.Departs_Tasks" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Departs">
+        <PropertyRef Name="Код_отдела" />
+      </Principal>
+      <Dependent Role="Departs_Tasks">
+        <PropertyRef Name="Отдел" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Задачи_отделам_Проекты">
+    <End Role="Projects" Type="Self.Projects" Multiplicity="1" />
+    <End Role="Departs_Tasks" Type="Self.Departs_Tasks" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Projects">
+        <PropertyRef Name="Код_проекта" />
+      </Principal>
+      <Dependent Role="Departs_Tasks">
+        <PropertyRef Name="Проект" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Задачи_сотрудникам_Проекты">
+    <End Role="Projects" Type="Self.Projects" Multiplicity="1" />
+    <End Role="Workers_Tasks" Type="Self.Workers_Tasks" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Projects">
+        <PropertyRef Name="Код_проекта" />
+      </Principal>
+      <Dependent Role="Workers_Tasks">
+        <PropertyRef Name="Проект" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Задачи_сотрудникам_Сотрудники">
+    <End Role="Workers" Type="Self.Workers" Multiplicity="1" />
+    <End Role="Workers_Tasks" Type="Self.Workers_Tasks" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Workers">
+        <PropertyRef Name="Код_сотрудника" />
+      </Principal>
+      <Dependent Role="Workers_Tasks">
+        <PropertyRef Name="Сотрудник" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Задачи_сотрудникам_Статусы">
+    <End Role="Statuses" Type="Self.Statuses" Multiplicity="1" />
+    <End Role="Workers_Tasks" Type="Self.Workers_Tasks" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Statuses">
+        <PropertyRef Name="Код_статуса" />
+      </Principal>
+      <Dependent Role="Workers_Tasks">
+        <PropertyRef Name="Статус" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Роли_Зарплата">
+    <End Role="Salary" Type="Self.Salary" Multiplicity="1" />
+    <End Role="Roles" Type="Self.Roles" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Salary">
+        <PropertyRef Name="Код_зарплаты" />
+      </Principal>
+      <Dependent Role="Roles">
+        <PropertyRef Name="Зарплата" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Сотрудники_Отделы">
+    <End Role="Departs" Type="Self.Departs" Multiplicity="0..1" />
+    <End Role="Workers" Type="Self.Workers" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Departs">
+        <PropertyRef Name="Код_отдела" />
+      </Principal>
+      <Dependent Role="Workers">
+        <PropertyRef Name="Отдел" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Сотрудники_Пол">
+    <End Role="Gender" Type="Self.Gender" Multiplicity="1" />
+    <End Role="Workers" Type="Self.Workers" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Gender">
+        <PropertyRef Name="Код_пола" />
+      </Principal>
+      <Dependent Role="Workers">
+        <PropertyRef Name="Пол" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Сотрудники_Роли">
+    <End Role="Roles" Type="Self.Roles" Multiplicity="1" />
+    <End Role="Workers" Type="Self.Workers" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Roles">
+        <PropertyRef Name="Код_роли" />
+      </Principal>
+      <Dependent Role="Workers">
+        <PropertyRef Name="Роль" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="Хранилище ModelContainer">
+    <EntitySet Name="Departs" EntityType="Self.Departs" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Gender" EntityType="Self.Gender" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Projects" EntityType="Self.Projects" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Roles" EntityType="Self.Roles" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Salary" EntityType="Self.Salary" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Statuses" EntityType="Self.Statuses" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Workers" EntityType="Self.Workers" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Departs_Tasks" EntityType="Self.Departs_Tasks" store:Type="Tables" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [Departs_Tasks].[Проект] AS [Проект], 
+    [Departs_Tasks].[Отдел] AS [Отдел], 
+    [Departs_Tasks].[Задача_отделу] AS [Задача_отделу], 
+    [Departs_Tasks].[Срок_выполнения_задачи] AS [Срок_выполнения_задачи], 
+    [Departs_Tasks].[Реальный_срок] AS [Реальный_срок]
+    FROM [dbo].[Departs_Tasks] AS [Departs_Tasks]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="Workers_Tasks" EntityType="Self.Workers_Tasks" store:Type="Tables" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [Workers_Tasks].[Проект] AS [Проект], 
+    [Workers_Tasks].[Сотрудник] AS [Сотрудник], 
+    [Workers_Tasks].[Задача] AS [Задача], 
+    [Workers_Tasks].[Срок_выполнения] AS [Срок_выполнения], 
+    [Workers_Tasks].[Статус] AS [Статус]
+    FROM [dbo].[Workers_Tasks] AS [Workers_Tasks]</DefiningQuery>
+    </EntitySet>
+    <AssociationSet Name="FK_Задачи_отделам_Отделы" Association="Self.FK_Задачи_отделам_Отделы">
+      <End Role="Departs" EntitySet="Departs" />
+      <End Role="Departs_Tasks" EntitySet="Departs_Tasks" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Задачи_отделам_Проекты" Association="Self.FK_Задачи_отделам_Проекты">
+      <End Role="Projects" EntitySet="Projects" />
+      <End Role="Departs_Tasks" EntitySet="Departs_Tasks" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Задачи_сотрудникам_Проекты" Association="Self.FK_Задачи_сотрудникам_Проекты">
+      <End Role="Projects" EntitySet="Projects" />
+      <End Role="Workers_Tasks" EntitySet="Workers_Tasks" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Задачи_сотрудникам_Сотрудники" Association="Self.FK_Задачи_сотрудникам_Сотрудники">
+      <End Role="Workers" EntitySet="Workers" />
+      <End Role="Workers_Tasks" EntitySet="Workers_Tasks" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Задачи_сотрудникам_Статусы" Association="Self.FK_Задачи_сотрудникам_Статусы">
+      <End Role="Statuses" EntitySet="Statuses" />
+      <End Role="Workers_Tasks" EntitySet="Workers_Tasks" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Роли_Зарплата" Association="Self.FK_Роли_Зарплата">
+      <End Role="Salary" EntitySet="Salary" />
+      <End Role="Roles" EntitySet="Roles" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Сотрудники_Отделы" Association="Self.FK_Сотрудники_Отделы">
+      <End Role="Departs" EntitySet="Departs" />
+      <End Role="Workers" EntitySet="Workers" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Сотрудники_Пол" Association="Self.FK_Сотрудники_Пол">
+      <End Role="Gender" EntitySet="Gender" />
+      <End Role="Workers" EntitySet="Workers" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Сотрудники_Роли" Association="Self.FK_Сотрудники_Роли">
+      <End Role="Roles" EntitySet="Roles" />
+      <End Role="Workers" EntitySet="Workers" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

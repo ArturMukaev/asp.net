@@ -1,0 +1,48 @@
+﻿@model IEnumerable<MYProj.Models.Workers_Tasks>
+@{
+    ViewBag.Title = "Otchet";
+}
+
+<h2>Ваши задачи:</h2>
+<table class="table">
+    <tr>
+        <th>
+            Проект
+        </th>
+        <th>
+            Задача
+        </th>
+        <th>
+            Срок выполнения
+        </th>
+        <th>
+            Статус
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Project.Название)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Задача)
+            </td>
+            <td>
+                @item.Срок_выполнения.ToShortDateString()
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Status.Статус)
+            </td>
+            <td>
+                @Html.ActionLink("Изменить", "Edit", new { pr = item.Проект, wor = item.Сотрудник })
+            </td>
+        </tr>
+    }
+
+</table>
+@Html.ActionLink("Выгрузить отчет в Excel", "Export", "Workers_Tasks", routeValues: null, htmlAttributes: new { @class = "artur-link btn btn-success", @style = "color: black;" })
+
+

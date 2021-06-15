@@ -1,0 +1,38 @@
+﻿@model IEnumerable<MYProj.Models.Depart>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Управление отделами</h2>
+
+<p>
+    @Html.ActionLink("Добавить отдел", "Create","Departs", new { @class = "artur-link" })
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Название)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Краткое_описание)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Название)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Краткое_описание)
+        </td>
+        <td>
+            @Html.ActionLink("Изменить", "Edit", new { id=item.Код_отдела }) |
+            @Html.ActionLink("Удалить", "Delete", new { id=item.Код_отдела })
+        </td>
+    </tr>
+}
+
+</table>

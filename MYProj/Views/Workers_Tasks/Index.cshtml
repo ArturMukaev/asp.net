@@ -1,0 +1,56 @@
+﻿@model IEnumerable<MYProj.Models.Workers_Tasks>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Задачи сотрудникам:</h2>
+
+<p>
+    @Html.ActionLink("Создать новую задачу", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            Проект
+        </th>
+        <th>
+            Сотрудник
+        </th>
+        <th>
+            Задача
+        </th>
+        <th>
+            Срок выполнения
+        </th>
+        <th>
+            Статус
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+<tr>
+    <td>
+        @Html.DisplayFor(modelItem => item.Project.Название)
+    </td>
+    <td>
+        @item.Worker.Фамилия @item.Worker.Имя @item.Worker.Отчество
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Задача)
+    </td>
+    <td>
+        @item.Срок_выполнения.ToShortDateString()
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Status.Статус)
+    </td>
+    <td>
+        @Html.ActionLink("Изменить", "Edit", new { pr=item.Проект, wor=item.Сотрудник }) |
+        @Html.ActionLink("Удалить", "Delete", new { pr = item.Проект, wor = item.Сотрудник })
+    </td>
+</tr>
+}
+
+</table>
